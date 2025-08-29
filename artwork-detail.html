@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>artwork detail – 우악스런쌍도녀</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="예시: 작품 상세 페이지입니다.">
+  <meta property="og:title" content="artwork detail – 우악스런쌍도녀(예시)">
+  <meta property="og:description" content="예시: 작품 설명, 이미지, 영상 등">
+  <meta property="og:image" content="assets/img/poster-b.jpg">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://example.com/artwork-detail.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="artwork detail – 우악스런쌍도녀(예시)">
+  <meta name="twitter:description" content="예시: 작품 설명, 이미지, 영상 등">
+  <meta name="twitter:image" content="assets/img/poster-b.jpg">
+  <link rel="icon" href="assets/favicon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="artwork-detail">
+
+<header class="header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html">
+      <img src="assets/img/logo1.svg" alt="사이트 로고">
+    </a>
+    <nav class="nav">
+      <a href="project.html">project</a>
+      <a href="subject.html">subject</a>
+      <a href="artwork.html">artwork</a>
+      <a href="team.html">team</a>
+      <a href="gallery.html">gallery</a>
+    </nav>
+  </div>
+</header>
+
+<main class="section">
+  <div class="container">
+    <a href="artwork.html" style="font-size:14px;color:var(--muted)">← 작품 목록으로</a>
+    <div id="detail" style="margin-top:12px"></div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div>© <span id="y"></span> <strong>예술행성 포엠</strong></div>
+    <div class="biz"><span>insta : @poam_art</span><span>e-mail : poamartstudio@gmail.com</span></div>
+  </div>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</footer>
+
+<script src="scripts/artworks.js"></script>
+<script src="scripts/ui.js"></script>
+<script>
+  const params = new URLSearchParams(location.search);
+  const id = params.get('id');
+  const list = (window.ARTWORKS || []);
+  const data = list.find(a => a.id === id);
+  const wrap = document.getElementById('detail');
+
+  // 안전 이스케이프
+  const esc = (s)=> String(s || '').replace(/[&<>"']/g, m => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'
+  }[m]));
+
+  // desc/details 전용 렌더러
+  // - desc에 <br>가 이미 있으면 그대로 신뢰하여 사용
+  // - 없으면 안전하게 escape한 뒤 \n을 <br>로 치환해 줄바꿈 표시
+  const renderMultiline = (s) => {
+    if (!s) return '';
+    const str = String(s);
+    const hasBR = /<\s*br\s*\/?>/i.test(str);
+    return hasBR ? str : esc(str).replace(/\n/g,'<br>');
+  };
+
+  const badge = (part)=> part
+    ? `<span style="display:inline-block;padding:4px 8px;border-radius:999px;background:#eee;font-size:12px;margin-right:8px">${part}부</span>`
+    : '';
+
+  const metaBlock = (d) => {
+    const meta = [];
+    if (d.artist)    meta.push(`<li>${esc(d.artist)}</li>`);
+    if (d.materials) meta.push(`<li>${esc(d.materials)}</li>`);
+    if (d.year)      meta.push(`<li>${esc(d.year)}</li>`);
+    if (!meta.length) return '';
+    return `<ul style="list-style:none;padding:0;margin:8px 0 0;color:var(--muted);font-size:14px;">${meta.join('')}</ul>`;
+  };
+
+  const detailsBlock = (d) => {
+    if (!d.details) return '';
+    return `<div style="margin-top:20px">${renderMultiline(d.details)}</div>`;
+  };
+
+  if(!data){
+    wrap.innerHTML = "<p>작품 정보를 찾을 수 없습니다.</p>";
+  }else{
+    document.title = `${data.title} – 우악스런쌍도녀`;
+
+    const samePart = list.filter(a => a.part === data.part);
+    const idx = samePart.findIndex(a=>a.id===data.id);
+    const prev = samePart[idx-1];
+    const next = samePart[idx+1];
+
+    const heroSrc = data.hero || data.thumb || '';
+
+    wrap.innerHTML = `
+      <h2 style="margin:0 0 8px">${badge(data.part)}${esc(data.title)}</h2>
+
+      ${heroSrc ? `<div class="kv"><img src="${heroSrc}" alt="${esc(data.title)}"></div>` : ''}
+
+      ${metaBlock(data)}
+
+      ${data.desc ? `<p class="lead desc" style="margin-top:12px">${renderMultiline(data.desc)}</p>` : ''}
+      ${data.video ? `
+  <video controls width="100%" style="margin:18px 0" poster="${data.thumb}">
+    <source src="${data.video}" type="video/mp4">
+    동영상을 재생할 수 없습니다.
+  </video>` : ""}
+
+      ${data.youtubeId ? `
+        <div class="video" style="margin:18px 0">
+          <iframe src="https://www.youtube.com/embed/${encodeURIComponent(data.youtubeId)}"
+                  title="${esc(data.title)} 영상"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen></iframe>
+        </div>` : ""}
+
+      ${Array.isArray(data.images) && data.images.length ? `
+        <div class="grid" style="margin-top:10px">
+          ${data.images.map(src=>`
+            <div class="card"><img class="detail-img" src="${src}" alt="${esc(data.title)}"></div>
+          `).join("")}
+        </div>` : ""}
+
+      ${detailsBlock(data)}
+
+      <div style="display:flex;gap:10px;margin-top:24px">
+        ${prev ? `<a href="artwork-detail.html?id=${encodeURIComponent(prev.id)}" style="padding:8px 12px;border:1px solid var(--border);border-radius:8px">← ${esc(prev.title)}</a>` : ''}
+        ${next ? `<a href="artwork-detail.html?id=${encodeURIComponent(next.id)}" style="padding:8px 12px;border:1px solid var(--border);border-radius:8px;margin-left:auto">${esc(next.title)} →</a>` : ''}
+      </div>
+    `;
+  }
+</script>
+</body>
+</html>

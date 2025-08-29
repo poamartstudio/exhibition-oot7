@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>gallery – 우악스런쌍도녀</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="예시: 활동 사진 갤러리 페이지입니다.">
+  <meta property="og:title" content="gallery – 우악스런쌍도녀(예시)">
+  <meta property="og:description" content="예시: 활동 사진을 모아보는 갤러리.">
+  <meta property="og:image" content="assets/img/poster-b.jpg">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://example.com/gallery.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="gallery – 우악스런쌍도녀(예시)">
+  <meta name="twitter:description" content="예시: 활동 사진을 모아보는 갤러리.">
+  <meta name="twitter:image" content="assets/img/poster-b.jpg">
+  <link rel="icon" href="assets/favicon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="gallery">
+
+
+<header class="header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html">
+      <img src="assets/img/logo1.svg" alt="사이트 로고">
+    </a>
+    <nav class="nav">
+      <a href="project.html">project</a>
+      <a href="subject.html">subject</a>
+      <a href="artwork.html">artwork</a>
+      <a href="team.html">team</a>
+      <a href="gallery.html">gallery</a>
+    </nav>
+  </div>
+</header>
+
+<main class="section">
+  <div class="container">
+    <h2>갤러리</h2>
+    <div class="grid" style="margin-top:16px">
+      <div class="card"><img class="gallery" src="assets/img/gallery-1.jpg" alt=""></div>
+      <div class="card"><img class="thumb" src="assets/img/gallery-2.jpeg" alt=""></div>
+      <div class="card"><img class="thumb" src="assets/img/gallery-4.jpeg" alt=""></div>
+      <div class="card"><img class="thumb" src="assets/img/gallery-3.jpeg" alt=""></div>
+      <div class="card"><img class="thumb" src="assets/img/gallery-6.jpg" alt=""></div>
+      <div class="card"><img class="thumb" src="assets/img/gallery-7.jpeg" alt=""></div>
+      <div class="card"><img class="thumb" src="assets/img/gallery-11.jpg" alt=""></div>
+      <div class="card"><img class="thumb" src="assets/img/gallery-12.jpg" alt=""></div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div>© <span id="y"></span> <strong>예술행성 포엠</strong></div>
+    <div class="biz"><span>insta : @poam_art</span><span>e-mail : poamartstudio@gmail.com</span></div>
+  </div>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</footer>
+
+<script src="scripts/ui.js"></script>
+</body>
+</html>

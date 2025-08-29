@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>artwork – 우악스런쌍도녀</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="예시: 1부/2부로 구분된 작품 소개 페이지입니다.">
+  <meta property="og:title" content="artwork – 우악스런쌍도녀(예시)">
+  <meta property="og:description" content="예시: 1부와 2부 설명 및 작품 카드 목록.">
+  <meta property="og:image" content="assets/img/poster-b.jpg">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://example.com/artwork.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="artwork – 우악스런쌍도녀(예시)">
+  <meta name="twitter:description" content="예시: 1부와 2부 설명 및 작품 카드 목록.">
+  <meta name="twitter:image" content="assets/img/poster-b.jpg">
+  <link rel="icon" href="assets/favicon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html">
+      <img src="assets/img/logo1.svg" alt="사이트 로고">
+    </a>
+    <nav class="nav">
+      <a href="project.html">project</a>
+      <a href="subject.html">subject</a>
+      <a href="artwork.html">artwork</a>
+      <a href="team.html">team</a>
+      <a href="gallery.html">gallery</a>
+    </nav>
+  </div>
+</header>
+
+<main class="section">
+  <div class="container">
+
+    <!-- 1부 -->
+    <h2>1부. '자기객체화'로부터의 탈피</h2>
+    <p class="lead">미디어가 만들어낸 경상도 여성의 형상은 단순히 외부가 부여한 낙인에 머물지 않고, 
+      우리의 무의식 속 깊숙이 자리하며 스스로를 규정하는 방식으로 작동해왔다. 
+      1부 전시에서 관람자는 작품을 통해 이러한 내면화된 인식을 마주하게 되며, 동시에 그로부터 벗어나는 탈피 가능성을 탐색하게 된다.</p>
+    <div id="grid-part1" class="grid" style="margin-top:16px"></div>
+
+    <hr style="margin:32px 0;border:none;border-top:1px solid var(--border)">
+
+    <!-- 2부 -->
+    <h2>2부. 미완자들의 연대</h2>
+    <p class="lead">2부 전시는 ‘완성된 본질’의 굴레를 벗어나, 끊임없이 변화하는 ‘미완의 실존자’로 나아가려는 서로를 긍정하는 것에서부터 시작한다. 
+      관람자의 참여와 행위를 통해, 추상적이던 ‘연대’는 공간 속에서 구체적 경험으로 전환되며, 내면의 다짐은 외부로 확장되어 서로를 잇는 힘으로 이어진다.</p>
+    <div id="grid-part2" class="grid" style="margin-top:16px"></div>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div>© <span id="y"></span> <strong>예술행성 포엠</strong></div>
+    <div class="biz"><span>insta : @poam_art</span><span>e-mail : poamartstudio@gmail.com</span></div>
+  </div>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</footer>
+
+<script src="scripts/artworks.js"></script>
+<script src="scripts/ui.js"></script>
+<script>
+  // 카드 DOM 생성
+  function makeCard(a){
+    const el = document.createElement('a');
+    el.href = `artwork-detail.html?id=${encodeURIComponent(a.id)}`;
+    el.className = 'card';
+    el.innerHTML = `
+      <img class="thumb" src="${a.thumb}" alt="${a.title}">
+      <div class="body">
+        <h3>&nbsp;&nbsp;${a.title}</h3>
+      </div>
+    `;
+    return el;
+  }
+
+  (function(){
+    const list = (window.ARTWORKS || []);
+    const p1 = document.getElementById('grid-part1');
+    const p2 = document.getElementById('grid-part2');
+    const part1 = list.filter(a => a.part === 1);
+    const part2 = list.filter(a => a.part === 2);
+
+    p1.innerHTML=''; p2.innerHTML='';
+    (part1.length?part1:[]).forEach(a=>p1.appendChild(makeCard(a)));
+    (part2.length?part2:[]).forEach(a=>p2.appendChild(makeCard(a)));
+
+    if(!part1.length) p1.innerHTML = '<p style="color:var(--muted)">1부에 등록된 작품이 없습니다.</p>';
+    if(!part2.length) p2.innerHTML = '<p style="color:var(--muted)">2부에 등록된 작품이 없습니다.</p>';
+  })();
+</script>
+</body>
+</html>

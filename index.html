@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>우악스런쌍도녀 – 메인</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="예시: 경상도 여성의 실존과 연대를 다루는 다원예술 미디어전시 웹도록.">
+  <!-- OG/Twitter 예시 -->
+  <meta property="og:title" content="우악스런쌍도녀 – 메인(예시)">
+  <meta property="og:description" content="예시: 전시 소개와 포스터 미리보기.">
+  <meta property="og:image" content="assets/img/poster-b.jpg">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://example.com/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="우악스런쌍도녀 – 메인(예시)">
+  <meta name="twitter:description" content="예시: 전시 소개와 포스터 미리보기.">
+  <meta name="twitter:image" content="assets/img/poster-b.jpg">
+  <link rel="icon" href="assets/favicon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="home">
+
+<header class="header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html" aria-label="홈으로">
+      <img src="assets/img/logo2.svg" alt="전시 로고">
+    </a>
+    <nav class="nav" aria-label="주요 메뉴">
+      <a href="project.html">project</a>
+      <a href="subject.html">subject</a>
+      <a href="artwork.html">artwork</a>
+      <a href="team.html">team</a>
+      <a href="gallery.html">gallery</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="poster-wrap">
+    <!-- 브라우저가 자동 선택: 세로(포트레이트)=A, 가로(랜드스케이프)=B -->
+    <picture>
+      <source media="(orientation: portrait)"  srcset="assets/img/poster-a.jpg">
+      <source media="(orientation: landscape)" srcset="assets/img/poster-b.jpg">
+      <img id="posterImg" src="assets/img/poster-b.jpg" alt="전시 포스터">
+    </picture>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div>© <span id="y"></span> <strong>예술행성 포엠</strong></div>
+    <div class="biz"><span>insta : @poam_art</span><span>e-mail : poamartstudio@gmail.com</span></div>
+  </div>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</footer>
+
+<script src="scripts/ui.js"></script>
+</body>
+</html>
